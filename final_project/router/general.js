@@ -75,5 +75,43 @@ public_users.get('/review/:isbn', function (req, res) {
   res.json(book.reviews);
 });
 
+
+// Axios-based lookup functions for Tasks 10-13.
+// These call the existing public endpoints when invoked.
+
+const axios = require("axios");
+const BASE_URL = "http://localhost:5000";
+
+async function getAllBooks() {
+  const response = await axios.get(`${BASE_URL}/`);
+  return response.data;
+}
+
+async function getBookByISBN(isbn) {
+  const response = await axios.get(
+    `${BASE_URL}/isbn/${encodeURIComponent(isbn)}`
+  );
+  return response.data;
+}
+
+async function getBooksByAuthor(author) {
+  const response = await axios.get(
+    `${BASE_URL}/author/${encodeURIComponent(author)}`
+  );
+  return response.data;
+}
+
+async function getBooksByTitle(title) {
+  const response = await axios.get(
+    `${BASE_URL}/title/${encodeURIComponent(title)}`
+  );
+  return response.data;
+}
+
+public_users.getAllBooks = getAllBooks;
+public_users.getBookByISBN = getBookByISBN;
+public_users.getBooksByAuthor = getBooksByAuthor;
+public_users.getBooksByTitle = getBooksByTitle;
+
 module.exports.general = public_users;
 
